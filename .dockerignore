@@ -1,0 +1,13 @@
+.git
+.gitignore
+**/node_modules
+node_modules
+data
+build
+archive
+.venv
+.tmp
+web/dist
+api/dist
+.env
+*.tar.gz
