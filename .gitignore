@@ -11,6 +11,7 @@ PantryChef.xcodeproj/
 
 # SwiftPM
 Packages/*/.build/
+archive/**/Packages/*/.build/
 .swiftpm/
 
 # Raw datasets (large, reproducible from Tools/)
@@ -18,6 +19,7 @@ data/raw/
 
 # Generated artifacts (reproducible from Tools/build_web_artifacts.py)
 web/public/data/
+build/
 
 # Python
 .venv/
@@ -29,3 +31,7 @@ dist/
 
 # macOS
 .DS_Store
+
+# Local environment
+.env
+.tmp/
