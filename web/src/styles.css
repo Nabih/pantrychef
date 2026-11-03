@@ -449,6 +449,7 @@ a {
 
 .results-panel {
   min-width: 0;
+  scroll-margin-top: 16px;
 }
 
 .results-head {
@@ -674,9 +675,73 @@ a {
 }
 
 .results-foot {
-  margin: 22px 2px 0;
+  margin: 14px 2px 0;
   color: var(--muted);
   font-size: 12px;
+  text-align: center;
+}
+
+/* ---------- pagination ---------- */
+
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 26px;
+}
+
+.page-list {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.page-button,
+.page-arrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  min-width: 36px;
+  height: 36px;
+  padding: 0 11px;
+  border: 1px solid var(--line-strong);
+  border-radius: 10px;
+  background: var(--panel);
+  color: var(--ink);
+  font-size: 13px;
+  font-weight: 500;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+
+.page-button:hover,
+.page-arrow:hover:not(:disabled) {
+  border-color: var(--green);
+  background: var(--green-soft);
+}
+
+.page-button.active {
+  border-color: var(--green);
+  background: var(--green);
+  color: #fdf9ee;
+  font-weight: 700;
+}
+
+.page-arrow:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.page-gap {
+  display: flex;
+  align-items: center;
+  padding: 0 2px;
+  color: var(--muted);
 }
 
 /* ---------- empty + error ---------- */
@@ -1075,6 +1140,26 @@ a {
 
   .card-grid {
     grid-template-columns: minmax(0, 1fr);
+  }
+
+  .pagination {
+    gap: 6px;
+    margin-top: 22px;
+  }
+
+  .page-button,
+  .page-arrow {
+    min-width: 34px;
+    height: 34px;
+    padding: 0 9px;
+  }
+
+  .page-arrow-label {
+    display: none;
+  }
+
+  .results-foot {
+    font-size: 11px;
   }
 
   .sheet {

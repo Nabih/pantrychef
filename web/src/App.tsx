@@ -1,12 +1,14 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { fetchIngredients, fetchMatch, fetchMeta } from "./api";
 import { formatCompact } from "./format";
 import { IngredientPicker } from "./components/IngredientPicker";
+import { Pagination } from "./components/Pagination";
 import { RecipeCard } from "./components/RecipeCard";
 import { RecipeDetail } from "./components/RecipeDetail";
 
 const STORAGE_KEY = "pantrychef.pantry.v1";
+const PAGE_SIZE = 6;
 
 function loadPantry(): number[] {
   const fromUrl = new URLSearchParams(window.location.search).get("pantry");
@@ -32,6 +34,9 @@ function loadPantry(): number[] {
 export default function App() {
   const [selected, setSelected] = useState<number[]>(loadPantry);
   const [maxMinutes, setMaxMinutes] = useState<number | null>(null);
+  const [page, setPage] = useState(1);
+  const resultsRef = useRef<HTMLElement>(null);
+  const lastPage = useRef(page);
   const [detailId, setDetailId] = useState<number | null>(() => {
     const raw = new URLSearchParams(window.location.search).get("recipe");
     if (!raw) return null;
@@ -99,6 +104,26 @@ export default function App() {
   const closeDetail = useCallback(() => setDetailId(null), []);
 
   const results = matchQuery.data?.results ?? [];
+  const totalPages = Math.max(1, Math.ceil(results.length / PAGE_SIZE));
+  const safePage = Math.min(page, totalPages);
+  const start = (safePage - 1) * PAGE_SIZE;
+  const pageResults = results.slice(start, start + PAGE_SIZE);
+
+  // A new pantry or time filter starts a fresh result set.
+  useEffect(() => {
+    setPage(1);
+  }, [selected, maxMinutes]);
+
+  useEffect(() => {
+    if (page > totalPages) setPage(totalPages);
+  }, [page, totalPages]);
+
+  useEffect(() => {
+    if (lastPage.current === page) return;
+    lastPage.current = page;
+    resultsRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+  }, [page]);
+
   const selectedIngredients = useMemo(() => {
     if (!catalog) return [];
     const byId = new Map(catalog.map((item) => [item.id, item]));
@@ -185,7 +210,7 @@ export default function App() {
           )}
         </aside>
 
-        <section className="results-panel">
+        <section className="results-panel" ref={resultsRef}>
           <div className="results-head">
             <div>
               <h2>
@@ -276,7 +301,7 @@ export default function App() {
           {selected.length > 0 && results.length > 0 && (
             <>
               <div className="card-grid">
-                {results.map((recipe) => (
+                {pageResults.map((recipe) => (
                   <RecipeCard
                     key={recipe.id}
                     recipe={recipe}
@@ -284,9 +309,18 @@ export default function App() {
                   />
                 ))}
               </div>
+
+              <Pagination
+                page={safePage}
+                totalPages={totalPages}
+                onChange={setPage}
+              />
+
               <p className="results-foot">
-                Top {results.length} of millions of combinations. Method and
-                photos open on Food.com.
+                Showing {start + 1}–
+                {Math.min(start + PAGE_SIZE, results.length)} of {results.length}
+                {results.length === 60 ? "+" : ""} · method and photos open on
+                Food.com
               </p>
             </>
           )}
