@@ -136,7 +136,7 @@ curl -s localhost:8080/v1/match \
       "coverage": 1,
       "missing": [],
       "missingCount": 0,
-      "sourceUrl": "https://www.food.com/search/?q=Bhutanese%20Chicken"
+      "sourceUrl": "https://www.food.com/search/Bhutanese+Chicken"
     }
   ]
 }

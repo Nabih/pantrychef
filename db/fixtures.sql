@@ -23,9 +23,9 @@ INSERT INTO recipes
     (id, name, minutes, calories, servings, category_id, n_ingredients, foodcom_id, source_url) VALUES
     (10, 'Chicken With Rice', 30, 450, 4, 0, 3, 101, 'https://www.food.com/recipe/x-101'),
     (11, 'Garlic Chicken',    25, 380, 2, 0, 2, 102, 'https://www.food.com/recipe/x-102'),
-    (12, 'Tomato Rice',       20, 300, 4, 0, 3, NULL, 'https://www.food.com/search/?q=Tomato%20Rice'),
+    (12, 'Tomato Rice',       20, 300, 4, 0, 3, NULL, 'https://www.food.com/search/Tomato+Rice'),
     (13, 'Butter Cake',       60, 500, 8, 1, 3, 103, 'https://www.food.com/recipe/x-103'),
-    (14, 'Salt Soup',          5,  10, 1, 0, 1, NULL, 'https://www.food.com/search/?q=Salt%20Soup');
+    (14, 'Salt Soup',          5,  10, 1, 0, 1, NULL, 'https://www.food.com/search/Salt+Soup');
 
 INSERT INTO recipe_ingredients (recipe_id, ingredient_id, line, position) VALUES
     (10, 1, '2 chicken breasts', 0),

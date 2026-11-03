@@ -34,7 +34,7 @@ csv.field_size_limit(50 * 1024 * 1024)
 WS = re.compile(r"\s+")
 IMAGE_ID = re.compile(r"/recipes/((?:\d+/)+)")
 FOODCOM_BASE = "https://www.food.com"
-FOODCOM_SEARCH = "https://www.food.com/search/?q="
+FOODCOM_SEARCH = "https://www.food.com/search/"
 
 MIN_INGREDIENT_COUNT = int(os.environ.get("MIN_ING", "20"))
 MIN_KNOWN_PER_RECIPE = int(os.environ.get("MIN_KNOWN", "3"))
@@ -399,7 +399,7 @@ def main() -> None:
             source = (
                 f"{FOODCOM_BASE}/recipe/x-{foodcom_id}"
                 if foodcom_id
-                else FOODCOM_SEARCH + urllib.parse.quote(recipe["name"])
+                else FOODCOM_SEARCH + urllib.parse.quote_plus(recipe["name"], safe="")
             )
             writer.writerow([
                 recipe_id,
