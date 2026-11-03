@@ -8,7 +8,7 @@ import { RecipeCard } from "./components/RecipeCard";
 import { RecipeDetail } from "./components/RecipeDetail";
 
 const STORAGE_KEY = "pantrychef.pantry.v1";
-const PAGE_SIZE = 6;
+const PAGE_SIZE = 9;
 
 function loadPantry(): number[] {
   const fromUrl = new URLSearchParams(window.location.search).get("pantry");
@@ -280,7 +280,7 @@ export default function App() {
 
           {selected.length > 0 && matchQuery.isPending && (
             <div className="card-grid">
-              {Array.from({ length: 6 }, (_, index) => (
+              {Array.from({ length: 9 }, (_, index) => (
                 <div className="recipe-card skeleton-card" key={index}>
                   <div className="skeleton skeleton-line short" />
                   <div className="skeleton skeleton-title" />
