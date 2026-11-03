@@ -121,7 +121,12 @@ export default function App() {
   useEffect(() => {
     if (lastPage.current === page) return;
     lastPage.current = page;
-    resultsRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    const panel = resultsRef.current;
+    // Only chase the results when they have scrolled out of view; on a
+    // single-screen layout the pager is already visible.
+    if (panel && panel.getBoundingClientRect().top < 16) {
+      panel.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
   }, [page]);
 
   const selectedIngredients = useMemo(() => {
