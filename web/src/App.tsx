@@ -230,24 +230,53 @@ export default function App() {
               </p>
             </div>
 
-            <label className="time-filter">
-              <span>Time</span>
-              <select
-                value={maxMinutes ?? ""}
-                onChange={(event) =>
-                  setMaxMinutes(
-                    event.target.value ? Number(event.target.value) : null,
-                  )
-                }
-                disabled={selected.length === 0}
-              >
-                <option value="">Any</option>
-                <option value="30">≤ 30 min</option>
-                <option value="45">≤ 45 min</option>
-                <option value="60">≤ 1 hr</option>
-                <option value="90">≤ 1.5 hr</option>
-              </select>
-            </label>
+            <div className="results-tools">
+              <label className="time-filter">
+                <span>Time</span>
+                <select
+                  value={maxMinutes ?? ""}
+                  onChange={(event) =>
+                    setMaxMinutes(
+                      event.target.value ? Number(event.target.value) : null,
+                    )
+                  }
+                  disabled={selected.length === 0}
+                >
+                  <option value="">Any</option>
+                  <option value="30">≤ 30 min</option>
+                  <option value="45">≤ 45 min</option>
+                  <option value="60">≤ 1 hr</option>
+                  <option value="90">≤ 1.5 hr</option>
+                </select>
+              </label>
+
+              {totalPages > 1 && (
+                <div
+                  className="quick-pager"
+                  role="group"
+                  aria-label="Quick page navigation"
+                >
+                  <button
+                    type="button"
+                    onClick={() => setPage(safePage - 1)}
+                    disabled={safePage === 1}
+                    aria-label="Previous page"
+                    title="Previous page"
+                  >
+                    <span aria-hidden="true">‹</span>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setPage(safePage + 1)}
+                    disabled={safePage === totalPages}
+                    aria-label="Next page"
+                    title="Next page"
+                  >
+                    <span aria-hidden="true">›</span>
+                  </button>
+                </div>
+              )}
+            </div>
           </div>
 
           {selected.length === 0 && (
